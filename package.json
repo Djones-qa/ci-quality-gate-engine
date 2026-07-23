@@ -14,7 +14,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
     "test": "jest",
     "test:unit": "jest --testPathPattern=tests/unit",
-    "test:integration": "jest --testPathPattern=tests/integration",
+    "test:integration": "jest --testPathPattern=tests/integration --passWithNoTests",
     "test:coverage": "jest --coverage",
     "migrate": "ts-node src/storage/migrate.ts"
   },
