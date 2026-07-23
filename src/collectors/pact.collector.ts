@@ -11,15 +11,7 @@ interface PactVerification {
   }>;
 }
 
-interface PactReport {
-  provider: { name: string };
-  consumer: { name: string };
-  interactions: Array<{
-    description: string;
-    providerState?: string;
-  }>;
-  metadata?: Record<string, unknown>;
-}
+
 
 interface PactBrokerResult {
   summary: {

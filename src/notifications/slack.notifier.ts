@@ -18,7 +18,6 @@ export async function notifySlack(
   customMessage?: string,
 ): Promise<void> {
   const verdictEmoji = getVerdictEmoji(decision.verdict);
-  const color = getVerdictColor(decision.verdict);
 
   const message = customMessage || buildDefaultMessage(decision);
 
@@ -92,20 +91,7 @@ function getVerdictEmoji(verdict: string): string {
   }
 }
 
-function getVerdictColor(verdict: string): string {
-  switch (verdict) {
-    case 'pass':
-      return '#36a64f';
-    case 'warn':
-      return '#daa038';
-    case 'fail':
-      return '#cc0000';
-    case 'rollback':
-      return '#8b0000';
-    default:
-      return '#808080';
-  }
-}
+
 
 function buildDefaultMessage(decision: GateDecision): string {
   const emoji = getVerdictEmoji(decision.verdict);

@@ -12,7 +12,7 @@ export function getRedisClient(): Redis {
     const config = loadAppConfig();
     client = new Redis(config.redis.url, {
       maxRetriesPerRequest: 3,
-      retryStrategy(times) {
+      retryStrategy(times): number | null {
         if (times > 3) return null;
         return Math.min(times * 200, 2000);
       },

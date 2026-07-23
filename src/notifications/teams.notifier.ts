@@ -8,7 +8,7 @@ import { logger } from '../config/logger';
 export async function notifyTeams(
   webhookUrl: string,
   decision: GateDecision,
-  customMessage?: string,
+  _customMessage?: string,
 ): Promise<void> {
   const verdictEmoji = getVerdictEmoji(decision.verdict);
   const color = getVerdictColor(decision.verdict);
