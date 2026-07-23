@@ -1,0 +1,20 @@
+{
+  "stats": {
+    "expected": 45,
+    "unexpected": 1,
+    "flaky": 2,
+    "skipped": 0,
+    "duration": 85000
+  },
+  "suites": [
+    {
+      "title": "Checkout Flow",
+      "specs": [
+        {
+          "title": "should complete purchase",
+          "tests": [{ "status": "expected", "duration": 5200 }]
+        }
+      ]
+    }
+  ]
+}

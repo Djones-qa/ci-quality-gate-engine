@@ -1,0 +1,117 @@
+version: "1.0"
+name: "Production Deploy Gate"
+
+environments:
+  canary:
+    strategy: "any-fail-blocks"
+    rules:
+      - source: jest
+        metric: coverage_percent
+        operator: gte
+        threshold: 75
+        severity: fail
+      - source: k6
+        metric: p95_latency_ms
+        operator: lte
+        threshold: 500
+        severity: warn
+
+  staging:
+    strategy: "weighted-score"
+    minimum_score: 80
+    rules:
+      - source: jest
+        metric: coverage_percent
+        operator: gte
+        threshold: 80
+        weight: 20
+        severity: fail
+      - source: playwright
+        metric: pass_rate
+        operator: gte
+        threshold: 98
+        weight: 25
+        severity: fail
+      - source: k6
+        metric: p95_latency_ms
+        operator: lte
+        threshold: 300
+        weight: 20
+        severity: fail
+      - source: zap
+        metric: critical_vulnerabilities
+        operator: eq
+        threshold: 0
+        weight: 25
+        severity: fail
+      - source: axe
+        metric: critical_violations
+        operator: eq
+        threshold: 0
+        weight: 10
+        severity: fail
+
+  production:
+    strategy: "zero-tolerance"
+    requires_approval_on_warn: true
+    rollback_on_fail: true
+    rules:
+      - source: jest
+        metric: coverage_percent
+        operator: gte
+        threshold: 85
+        severity: fail
+      - source: playwright
+        metric: pass_rate
+        operator: eq
+        threshold: 100
+        severity: fail
+      - source: k6
+        metric: p95_latency_ms
+        operator: lte
+        threshold: 200
+        severity: fail
+      - source: zap
+        metric: critical_vulnerabilities
+        operator: eq
+        threshold: 0
+        severity: fail
+      - source: zap
+        metric: high_vulnerabilities
+        operator: eq
+        threshold: 0
+        severity: fail
+      - source: axe
+        metric: critical_violations
+        operator: eq
+        threshold: 0
+        severity: fail
+      - source: pact
+        metric: breaking_changes
+        operator: eq
+        threshold: 0
+        severity: fail
+
+notifications:
+  on_pass:
+    - slack:
+        channel: "#deployments"
+        message: "✅ Gate PASSED for {{build_id}} → {{environment}}"
+  on_warn:
+    - slack:
+        channel: "#qa-alerts"
+        message: "⚠️ Gate WARNING for {{build_id}} — manual approval required"
+  on_fail:
+    - slack:
+        channel: "#incidents"
+        message: "🚫 Gate FAILED for {{build_id}} — deployment blocked"
+    - pagerduty:
+        severity: "warning"
+        routing_key: "${PAGERDUTY_ROUTING_KEY}"
+  on_rollback:
+    - pagerduty:
+        severity: "critical"
+        routing_key: "${PAGERDUTY_ROUTING_KEY}"
+    - slack:
+        channel: "#incidents"
+        message: "🔴 ROLLBACK triggered for {{build_id}} in production"

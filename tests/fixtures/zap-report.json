@@ -1,0 +1,22 @@
+{
+  "site": [
+    {
+      "alerts": [
+        {
+          "riskcode": "2",
+          "confidence": "2",
+          "name": "X-Frame-Options Header Not Set",
+          "count": "5",
+          "riskdesc": "Medium (Medium)"
+        },
+        {
+          "riskcode": "1",
+          "confidence": "2",
+          "name": "Cookie Without Secure Flag",
+          "count": "2",
+          "riskdesc": "Low (Medium)"
+        }
+      ]
+    }
+  ]
+}

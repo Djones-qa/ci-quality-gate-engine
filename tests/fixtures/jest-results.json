@@ -1,0 +1,28 @@
+{
+  "numTotalTests": 120,
+  "numPassedTests": 118,
+  "numFailedTests": 2,
+  "numPendingTests": 0,
+  "testResults": [
+    {
+      "testFilePath": "tests/unit/auth.test.ts",
+      "numPassingTests": 45,
+      "numFailingTests": 0,
+      "perfStats": { "runtime": 2300 }
+    },
+    {
+      "testFilePath": "tests/unit/api.test.ts",
+      "numPassingTests": 73,
+      "numFailingTests": 2,
+      "perfStats": { "runtime": 3100 }
+    }
+  ],
+  "coverageMap": {
+    "total": {
+      "lines": { "pct": 87.3 },
+      "statements": { "pct": 86.1 },
+      "functions": { "pct": 91.2 },
+      "branches": { "pct": 79.5 }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+name: "CI Quality Gate Engine"
+description: "Evaluate a quality gate with multi-signal test aggregation"
+author: "Darrius Jones"
+
+inputs:
+  config:
+    description: "Path to gate-config.yml"
+    required: false
+    default: "gate-config.yml"
+  environment:
+    description: "Target environment (canary, staging, production)"
+    required: true
+  build-id:
+    description: "Build identifier"
+    required: false
+    default: "${{ github.sha }}"
+  jest-report:
+    description: "Path to Jest JSON report"
+    required: false
+  playwright-report:
+    description: "Path to Playwright JSON report"
+    required: false
+  k6-report:
+    description: "Path to k6 summary JSON"
+    required: false
+  zap-report:
+    description: "Path to OWASP ZAP report"
+    required: false
+  axe-report:
+    description: "Path to axe-core results JSON"
+    required: false
+  pact-report:
+    description: "Path to Pact verification report"
+    required: false
+  lighthouse-report:
+    description: "Path to Lighthouse report JSON"
+    required: false
+  slack-webhook:
+    description: "Slack webhook URL for notifications"
+    required: false
+
+outputs:
+  verdict:
+    description: "Gate verdict (pass, warn, fail, rollback)"
+  score:
+    description: "Gate score (0-100)"
+  summary:
+    description: "JSON summary of the gate evaluation"
+
+runs:
+  using: "node20"
+  main: "dist/index.js"
+
+branding:
+  icon: "shield"
+  color: "green"

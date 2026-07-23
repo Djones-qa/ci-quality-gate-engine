@@ -1,0 +1,21 @@
+{
+  "violations": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "description": "Elements must have sufficient color contrast",
+      "nodes": [
+        { "html": "<p class='light'>text</p>", "target": [".light"] }
+      ]
+    }
+  ],
+  "passes": [
+    { "id": "aria-roles" },
+    { "id": "button-name" },
+    { "id": "document-title" },
+    { "id": "html-has-lang" },
+    { "id": "image-alt" }
+  ],
+  "incomplete": [],
+  "inapplicable": []
+}
